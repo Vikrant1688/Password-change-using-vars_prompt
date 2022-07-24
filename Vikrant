@@ -1,0 +1,20 @@
+---
+- name: This plabook will modify the ansible user password
+  hosts: 192.168.80.131
+  become: true
+  vars_prompt:
+          - name: user_name
+            prompt: "Enter your user name"
+            private: false
+
+          - name: pass
+            prompt: "Enter your password \n"
+            private: false
+            encrypt: sha512_crypt
+            confirm: yes
+
+  tasks:
+          - name: changing ansible user password
+            user:
+                    name: "{{user_name}}"
+                    password: "{{pass}}"
